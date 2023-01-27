@@ -1,5 +1,6 @@
 import React from 'react'
-import "../home.css";
+import "../home.scss";
+import paperIcon from "../../images/Paper.svg"
 
 function List({pickupLines}) {
   return (
@@ -15,8 +16,9 @@ function Card({data}) {
     return (
         <div className={"card-item"}>
             <div>{data}</div>
-            <div>
-            <div onClick={() =>  navigator.clipboard.writeText(data)}>Copy</div>
+            <div className="copy-icon" onClick={() => navigator.clipboard.writeText(data)}>
+                <img src={paperIcon} alt="paper" />
+                <div>Copy</div>
             </div>
         </div>
     )

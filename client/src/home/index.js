@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import "./home.css";
+import "./home.scss";
 import List from './List';
+import Logo from "../images/logo.svg"
+import facebook from "../images/facebook.svg"
+import twitter from "../images/twitter.svg"
+import instagram from "../images/instagram.svg"
+import linkedin from "../images/linkedin.svg"
 
 function PickMyLine() {
 
@@ -50,43 +55,75 @@ function PickMyLine() {
     }
 
 
-    return (
-        <div>
-            <header>
-            PickMyLine
+    return (<>
+        <div className="content">
+            <header className="header-section">
+                <section className="left-section">
+                    <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
+                    <div className="logo-text">Pick My Line</div></div>
+                </section>
+                <section className="right-section"></section>
             </header>
-            <section>
-                
-            </section>
-           
-
-            <section style={{padding: "20px 30px"}}>
-            <div id="cover">
-                <form onSubmit={handleSubmit}>
-                    <div class="tb">
-                        <div class="td"><input type="text"
-                            placeholder="Search"
-                            required
-                            name="prompt"
-                            value={prompt}
-                            onChange={inputChange}
-                        />
-                        </div>
-                    <div class="td" id="s-cover">
-                        <button type="submit">
-                        <div id="s-circle"></div>
-                        <span></span>
-                        </button>
-                    </div>
-                    </div>
-                </form>
+            <section className="center-heading">
+                <div className="bold-heading">
+                    Pick your favourite line to flat your <span class="hightlight-text">partner!</span>
                 </div>
-                <List pickupLines={pickupLines}/>
+                <div className="sub-heading">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
+                </div>
             </section>
-            <footer>
-            </footer>
 
+
+            <section className="main-content">
+                <section>
+                    <form onSubmit={handleSubmit}>
+                        <section className="search-container">
+                            <input type="text"
+                                    placeholder="Enter your text"
+                                    required
+                                    name="prompt"
+                                    value={prompt}
+                                onChange={inputChange}
+                                className="search-box"
+                                />
+                            <button type="submit" className="search-button">
+                                    Get your Line
+                            </button>
+                        </section>
+                        {/* <section className="gender-dropdown">
+                        <label for="gender">Select gender</label>
+                            <select name="gender" id="cars">
+                                <option value="girls">Lines For Girls</option>
+                                <option value="boys">Lines For Boys</option>
+                            </select>
+                        </section> */}
+                    </form>
+                </section>
+                <List pickupLines={pickupLines} />
+            </section>
         </div>
+        <footer>
+            <section className="footer-logo">
+        <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
+        <div className="logo-text">Pick My Line</div></div>
+            </section>
+            {/* <section className="links">
+                <div>Overview</div>
+                <div>Teams</div>
+                <div>Jobs</div>
+                <div>Overview</div>
+                <div>Overview</div>
+            </section> */}
+            <section className="social-handles">
+                <img src={facebook} alt="facebook_icon"/>
+                <img src={twitter} alt="twitter_icon"/>
+                <img src={instagram} alt="instagram"/>
+                <img src={linkedin} alt="linkedin"/>
+            </section>
+         </footer>
+        </>
     )
 }
 
