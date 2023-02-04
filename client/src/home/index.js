@@ -15,28 +15,28 @@ function PickMyLine() {
     
 
     const generateText = async (prompt, gender) => {
-        // const response = await fetch(`/api/generate?gender=${gender}`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         prompt
-        //     }),
-        // });
-        // if (!response.ok) {
-        //     throw new Error('The data could not be fetched');
-        // }
+        const response = await fetch(`/api/generate?gender=${gender}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                prompt
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('The data could not be fetched');
+        }
         saveDataToGoogleSheet();
-        // const data = await response.json();
-        // let linesFetched = data.data.slice(1);
-        // let formattedLines = linesFetched.split('\n');
-        let formattedLines = [
-            "",
-            "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
-            "2. \"Are you from Korea? Because you're my Seoulmate!\""
-        ]
-        console.log("formattedLines - ", formattedLines.slice(1));
+        const data = await response.json();
+        let linesFetched = data.data.slice(1);
+        let formattedLines = linesFetched.split('\n');
+        // let formattedLines = [
+        //     "",
+        //     "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
+        //     "2. \"Are you from Korea? Because you're my Seoulmate!\""
+        // ]
+        // console.log("formattedLines - ", formattedLines.slice(1));
         setPickupLines(formattedLines.slice(1).filter((item) => item !== ""));
     }
 
