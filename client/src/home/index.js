@@ -15,28 +15,28 @@ function PickMyLine() {
     
 
     const generateText = async (prompt, gender) => {
-        const response = await fetch(`/api/generate?gender=${gender}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                prompt
-            }),
-        });
-        if (!response.ok) {
-            throw new Error('The data could not be fetched');
-        }
-
-        const data = await response.json();
-        let linesFetched = data.data.slice(1);
-        let formattedLines = linesFetched.split('\n');
-        // let formattedLines = [
-        //     "",
-        //     "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
-        //     "2. \"Are you from Korea? Because you're my Seoulmate!\""
-        // ]
-        // console.log("formattedLines - ", formattedLines.slice(1));
+        // const response = await fetch(`/api/generate?gender=${gender}`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         prompt
+        //     }),
+        // });
+        // if (!response.ok) {
+        //     throw new Error('The data could not be fetched');
+        // }
+        saveDataToGoogleSheet();
+        // const data = await response.json();
+        // let linesFetched = data.data.slice(1);
+        // let formattedLines = linesFetched.split('\n');
+        let formattedLines = [
+            "",
+            "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
+            "2. \"Are you from Korea? Because you're my Seoulmate!\""
+        ]
+        console.log("formattedLines - ", formattedLines.slice(1));
         setPickupLines(formattedLines.slice(1).filter((item) => item !== ""));
     }
 
@@ -91,13 +91,11 @@ function PickMyLine() {
                     Pick your favourite line to flat your <span className="hightlight-text">partner!</span>
                 </div>
                 <div className="sub-heading">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.
+                   Not getting conversations started even after getting matches? Here is a ChatGPT powered pickup line generator for you!!
                 </div>
             </section>
 
-
+            <section className="main-content-container">
             <section className="main-content">
                 <section>
                     <form onSubmit={handleSubmit}>
@@ -128,24 +126,26 @@ function PickMyLine() {
                     handlePrevClick={handlePrevClick}
                 />
             </section>
+            </section>
+            
         </div>
         <footer>
             <section className="footer-logo">
                 <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
                     <div className="logo-text">Pick My Line</div></div>
             </section>
-            {/* <section className="links">
-                <div>Overview</div>
-                <div>Teams</div>
-                <div>Jobs</div>
-                <div>Overview</div>
-                <div>Overview</div>
-            </section> */}
+            <section className="links">
+                <div><a href="https://linktr.ee/pickmyline" target="_blank" rel="noreferrer">Team</a></div>
+                <div><a href="https://forms.gle/zujJufCBbWvVVofS6" target="_blank" rel="noreferrer">Contact Us</a></div>
+            </section>
             <section className="social-handles">
                 <img src={facebook} alt="facebook_icon" onClick={saveDataToGoogleSheet}/>
                 <img src={twitter} alt="twitter_icon" onClick={saveDataToGoogleSheet}/>
                 <img src={instagram} alt="instagram" onClick={saveDataToGoogleSheet}/>
                 <img src={linkedin} alt="linkedin" onClick={saveDataToGoogleSheet}/>
+            </section>
+            <section className="links">
+                <div>Designed with love by <a href="https://destlab.in/" target="_blank" rel="noreferrer" >DestLab</a></div>
             </section>
         </footer>
     </>

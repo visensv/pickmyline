@@ -1,6 +1,6 @@
 import React from 'react'
 import "../home.scss";
-import paperIcon from "../../images/Paper.svg"
+import copyIcon from "../../images/copy.png"
 import leftArrow from "../../images/leftArrow.svg"
 import rigthArrow from "../../images/rightArrow.svg"
 import Carousel from 'react-elastic-carousel'
@@ -36,11 +36,10 @@ function Card({data}) {
     return (
         <div className={"list-container"}>
             <div className={"card-item"}>
-            <div>{data}</div>
+                <div>{data}</div>
+                <div className="copy-icon" onClick={() => navigator.clipboard.writeText(data)}>
+                    <img src={copyIcon} alt="paper" style={{opacity: "0.6"}}/>
             </div>
-            <div className="copy-icon" onClick={() => navigator.clipboard.writeText(data)}>
-                <img src={paperIcon} alt="paper" />
-                <div>Copy</div>
             </div>
         </div>
     )
