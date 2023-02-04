@@ -11,36 +11,45 @@ function PickMyLine() {
 
     const [prompt, setPrompt] = useState("");
     const [pickupLines, setPickupLines] = useState([]);
+    const [gender, setGender] = useState("girls");
+    
 
-    const generateText = async (prompt) => {
-        // const response = await fetch('/api/generate', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         prompt
-        //     }),
-        // });
-        // if (!response.ok) {
-        //     throw new Error('That image could not be generated');
-        //   }
+    const generateText = async (prompt, gender) => {
+        const response = await fetch(`/api/generate?gender=${gender}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                prompt
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('The data could not be fetched');
+        }
 
-        // const data = await response.json();
-        // let linesFetched = data.data.slice(1);
-        // let formattedLines = linesFetched.split('\n');
-        let formattedLines = [
-            "",
-            "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
-            "2. \"Are you from Korea? Because you're my Seoulmate!\""
-        ]
+        const data = await response.json();
+        let linesFetched = data.data.slice(1);
+        let formattedLines = linesFetched.split('\n');
+        // let formattedLines = [
+        //     "",
+        //     "1. \"If I could rearrange the alphabet, I'd put U and I together.\"",
+        //     "2. \"Are you from Korea? Because you're my Seoulmate!\""
+        // ]
         // console.log("formattedLines - ", formattedLines.slice(1));
-        setPickupLines(formattedLines.slice(1));
+        setPickupLines(formattedLines.slice(1).filter((item) => item !== ""));
     }
 
-    // useEffect(() => {
-    //     generateText("asian girls");
-    // }, [])
+    const saveDataToGoogleSheet = async () => {
+        await fetch('/api/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    }
+
+    
 
     const inputChange = (event) => {
         const { value } = event.target;
@@ -49,9 +58,22 @@ function PickMyLine() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("values - ", prompt);
-        generateText(prompt);
+        generateText(prompt, gender);
         setPrompt("");
+    }
+
+    const handleNextClick = (activePage, totalPages, clickAction) => {
+        if (activePage === totalPages.length - 1) return
+        clickAction(activePage + 1)
+    }
+
+    const handlePrevClick = (activePage, clickAction) => {
+        if (activePage !== 0) clickAction(activePage - 1)
+    }
+
+    const handleGenderChange = (event) => {
+        const { value } = event.target;
+        setGender(value);
     }
 
 
@@ -60,13 +82,13 @@ function PickMyLine() {
             <header className="header-section">
                 <section className="left-section">
                     <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
-                    <div className="logo-text">Pick My Line</div></div>
+                        <div className="logo-text">Pick My Line</div></div>
                 </section>
                 <section className="right-section"></section>
             </header>
             <section className="center-heading">
                 <div className="bold-heading">
-                    Pick your favourite line to flat your <span class="hightlight-text">partner!</span>
+                    Pick your favourite line to flat your <span className="hightlight-text">partner!</span>
                 </div>
                 <div className="sub-heading">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -81,33 +103,36 @@ function PickMyLine() {
                     <form onSubmit={handleSubmit}>
                         <section className="search-container">
                             <input type="text"
-                                    placeholder="Enter your text"
-                                    required
-                                    name="prompt"
-                                    value={prompt}
+                                placeholder="Enter your text"
+                                required
+                                name="prompt"
+                                value={prompt}
                                 onChange={inputChange}
                                 className="search-box"
-                                />
+                            />
                             <button type="submit" className="search-button">
-                                    Get your Line
+                                Get your Line
                             </button>
                         </section>
-                        {/* <section className="gender-dropdown">
-                        <label for="gender">Select gender</label>
-                            <select name="gender" id="cars">
+                        <section className="gender-dropdown">
+                            <label htmlFor="gender">Select gender</label>
+                            <select name="gender" id="cars" onChange={handleGenderChange} value={gender}>
                                 <option value="girls">Lines For Girls</option>
                                 <option value="boys">Lines For Boys</option>
                             </select>
-                        </section> */}
+                        </section>
                     </form>
                 </section>
-                <List pickupLines={pickupLines} />
+                <List pickupLines={pickupLines}
+                    handleNextClick={handleNextClick}
+                    handlePrevClick={handlePrevClick}
+                />
             </section>
         </div>
         <footer>
             <section className="footer-logo">
-        <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
-        <div className="logo-text">Pick My Line</div></div>
+                <div className="logo"><img className="logo-img" src={Logo} alt="logo" />
+                    <div className="logo-text">Pick My Line</div></div>
             </section>
             {/* <section className="links">
                 <div>Overview</div>
@@ -117,13 +142,13 @@ function PickMyLine() {
                 <div>Overview</div>
             </section> */}
             <section className="social-handles">
-                <img src={facebook} alt="facebook_icon"/>
-                <img src={twitter} alt="twitter_icon"/>
-                <img src={instagram} alt="instagram"/>
-                <img src={linkedin} alt="linkedin"/>
+                <img src={facebook} alt="facebook_icon" onClick={saveDataToGoogleSheet}/>
+                <img src={twitter} alt="twitter_icon" onClick={saveDataToGoogleSheet}/>
+                <img src={instagram} alt="instagram" onClick={saveDataToGoogleSheet}/>
+                <img src={linkedin} alt="linkedin" onClick={saveDataToGoogleSheet}/>
             </section>
-         </footer>
-        </>
+        </footer>
+    </>
     )
 }
 

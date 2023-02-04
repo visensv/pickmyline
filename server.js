@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Define Routes
 app.use('/api/generate', require('./routes/api/generateLines'));
+app.use('/api/save', require('./routes/api/saveToGoogleSheet'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
