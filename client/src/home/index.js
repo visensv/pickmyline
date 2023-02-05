@@ -91,7 +91,7 @@ function PickMyLine() {
                     Pick your favourite line to flat your <span className="hightlight-text">partner!</span>
                 </div>
                 <div className="sub-heading">
-                   Not getting conversations started even after getting matches? Here is a ChatGPT powered pickup line generator for you!!
+                Not able to start conversation even after getting matched? Here is a ChatGPT powered pickup line generator for you!!
                 </div>
             </section>
 
